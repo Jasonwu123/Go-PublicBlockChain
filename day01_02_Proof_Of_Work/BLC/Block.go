@@ -23,6 +23,8 @@ type Block struct {
 
 	// 当前区块哈希值Hash：32个字节，64个16进制
 	Hash []byte
+
+	Nonce int64
 }
 
 // step2: 创建新的区块
@@ -37,7 +39,15 @@ func NewBlock(data string, prevBlockHash []byte, height int64) *Block {
 	}
 
 	// 调用方法设置哈希值
-	block.SetHash()
+	//block.SetHash()
+
+	pow := NewProofOfWork(block)
+
+	hash, nonce := pow.Run()
+
+	block.Hash = hash
+
+	block.Nonce = nonce
 
 	return block
 }

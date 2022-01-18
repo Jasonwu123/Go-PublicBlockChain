@@ -3,6 +3,7 @@ package main
 import (
 	"BLC"
 	"fmt"
+	"strconv"
 )
 
 func main() {
@@ -31,11 +32,35 @@ func main() {
 	blockChain.AddBlockToBlockChain("Send 3 btc to Lixiaohua", blockChain.Blocks[len(blockChain.Blocks)-1].Hash, blockChain.Blocks[len(blockChain.Blocks)-1].Height+1)
 	blockChain.AddBlockToBlockChain("Send 10 btc to Rose", blockChain.Blocks[len(blockChain.Blocks)-1].Hash, blockChain.Blocks[len(blockChain.Blocks)-1].Height+1)
 
+	//for _, block := range blockChain.Blocks {
+	//	fmt.Printf("Block height: %x\n", block.Height)
+	//	fmt.Printf("Prev hash: %x\n", block.PrevBlockHash)
+	//	fmt.Printf("Data: %s\n", block.Data)
+	//	fmt.Printf("Hash: %x\n", block.Hash)
+	//	fmt.Println()
+	//}
+
+	fmt.Println(blockChain)
+	//pow := BLC.NewProofOfWork(blockChain.Blocks[0])
+	//fmt.Printf("%v\n", pow.IsValid())
+
 	for _, block := range blockChain.Blocks {
-		fmt.Printf("Block height: %x\n", block.Height)
-		fmt.Printf("Prev hash: %x\n", block.PrevBlockHash)
-		fmt.Printf("Data: %s\n", block.Data)
-		fmt.Printf("Hash: %x\n", block.Hash)
-		fmt.Println()
+		pow := BLC.NewProofOfWork(block)
+		fmt.Printf("target: %d\n", pow.Target)
+		fmt.Printf("Nonce: %d\n", pow.Block.Nonce)
+		fmt.Printf("ProofOfWork: %s\n", strconv.FormatBool(pow.IsValid()))
 	}
+
+	// 5. 检测pow
+	// a. 创建一个big对象 000000....00001
+	//target := big.NewInt(1)
+	//fmt.Printf("0x%x\n", target)
+	//
+	//// b. 左移256-bits位
+	//target = target.Lsh(target, 256-BLC.TargetBit)
+	//fmt.Printf("0x%x\n", target)
+	//
+	//s1 := "HelloWorld"
+	//hash := sha256.Sum256([]byte(s1))
+	//fmt.Printf("0x%x\n", hash)
 }
