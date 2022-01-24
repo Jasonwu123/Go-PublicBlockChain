@@ -139,4 +139,5 @@ func main() {
 	blockchain.AddBlockToBlockChain("Send 100RMB to rose")
 	fmt.Println(blockchain)
 	blockchain.PrintChains()
+
 }
